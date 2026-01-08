@@ -3,12 +3,7 @@ data "vsphere_datacenter" "dc" {
 }
 
 data "vsphere_host" "host" {
-  name          = var.host
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
-
-data "vsphere_resource_pool" "pool" {
-  name          = "Resources"
+  name          = var.esxi_host
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -23,6 +18,6 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = var.template
+  name          = var.template_name
   datacenter_id = data.vsphere_datacenter.dc.id
 }

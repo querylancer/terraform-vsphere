@@ -1,11 +1,10 @@
 resource "vsphere_virtual_machine" "vm" {
   name             = var.vm_name
-  resource_pool_id = data.vsphere_resource_pool.pool.id
-  host_system_id   = data.vsphere_host.host.id
+  resource_pool_id = data.vsphere_host.host.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
 
-  num_cpus = 2
-  memory   = 4096
+  num_cpus = var.cpu
+  memory   = var.memory
   guest_id = data.vsphere_virtual_machine.template.guest_id
 
   network_interface {
@@ -15,7 +14,7 @@ resource "vsphere_virtual_machine" "vm" {
 
   disk {
     label            = "disk0"
-    size             = data.vsphere_virtual_machine.template.disks[0].size
+    size             = var.disk_size
     thin_provisioned = true
   }
 
