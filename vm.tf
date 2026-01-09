@@ -20,6 +20,20 @@ resource "vsphere_virtual_machine" "vm" {
 
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
+
+     customize {
+      linux_options {
+        host_name = "vm-terraform-01"
+        domain    = "corp.local"
+      }
+
+      network_interface {
+        ipv4_address = "10.70.161.50"
+        ipv4_netmask = 24
+      }
+
+      ipv4_gateway = "10.70.100.8"
+    }
     
   }
 }
