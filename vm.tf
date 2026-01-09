@@ -14,11 +14,24 @@ resource "vsphere_virtual_machine" "vm" {
 
   disk {
     label            = "disk0"
-    size             = var.disk_size
+    size             = data.vsphere_virtual_machine.template.disks[0].size
     thin_provisioned = true
   }
 
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
+    customize {
+      linux_options {
+        host_name = "vm-terraform-01"
+        domain    = "company.local"
+      }
+
+      network_interface {
+        ipv4_address = "192.168.1.50"
+        ipv4_netmask = 24
+      }
+
+      ipv4_gateway = "192.168.1.1"
+    }
   }
 }

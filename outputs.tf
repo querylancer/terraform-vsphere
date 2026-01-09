@@ -5,3 +5,7 @@ output "vm_name" {
 output "vm_ip" {
   value = vsphere_virtual_machine.vm.default_ip_address
 }
+
+output "template_id" {
+  value = data.vsphere_virtual_machine.template.id
+}
